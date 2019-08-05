@@ -1,1 +1,1 @@
-# PaymentGatewayService
+# Checkout.PaymentGateway
