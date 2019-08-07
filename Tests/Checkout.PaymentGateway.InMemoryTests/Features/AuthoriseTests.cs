@@ -1,10 +1,12 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using Checkout.PaymentGateway.Host.Processor;
+using Checkout.PaymentGateway.InMemoryTests.Contracts;
+using Checkout.PaymentGateway.InMemoryTests.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Checkout.PaymentGateway.InMemoryTests
+namespace Checkout.PaymentGateway.InMemoryTests.Features
 {
     [TestFixture]
     public class AuthoriseTests : TestBase
@@ -67,5 +69,17 @@ namespace Checkout.PaymentGateway.InMemoryTests
             Assert.That(response.Content.Status, Is.EqualTo("Failed"));
         }
 
+        [Test]
+        public async Task Payment_authorisation_with_invalid_payment()
+        {
+            var invalidRequest = new AuthoriseRequest();
+
+            var response = await _paymentServiceClient.Authorise(invalidRequest);
+
+            Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+            Assert.NotNull(response.Content.Id);
+            Assert.That(response.Content.Id, Is.Not.EqualTo("psp_reference_id"));
+            Assert.That(response.Content.Status, Is.EqualTo("Failed"));
+        }
     }
 }

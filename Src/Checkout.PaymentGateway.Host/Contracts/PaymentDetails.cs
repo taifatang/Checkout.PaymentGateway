@@ -1,4 +1,4 @@
-﻿namespace Checkout.PaymentGateway.InMemoryTests.Contracts
+﻿namespace Checkout.PaymentGateway.Host.Contracts
 {
     public class PaymentDetails
     {

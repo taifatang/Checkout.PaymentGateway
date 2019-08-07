@@ -1,13 +1,13 @@
 ﻿using System.Net.Http;
 using Checkout.PaymentGateway.Host;
-using Checkout.PaymentGateway.Host.AcquiringBankHandler;
+using Checkout.PaymentGateway.Host.AcquiringBank;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 
-namespace Checkout.PaymentGateway.InMemoryTests
+namespace Checkout.PaymentGateway.InMemoryTests.TestHelper
 {
     public abstract class TestBase
     {
@@ -21,6 +21,7 @@ namespace Checkout.PaymentGateway.InMemoryTests
         public void SetUp()
         {
             var builder = new WebHostBuilder()
+                .UseKestrel()
                 .UseEnvironment("Development")
                 .UseStartup<Startup>()
                 .ConfigureTestServices(ConfigureOverrides);

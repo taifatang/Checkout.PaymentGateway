@@ -1,8 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
+using Checkout.PaymentGateway.InMemoryTests.Contracts;
 using Newtonsoft.Json;
 
-namespace Checkout.PaymentGateway.InMemoryTests
+namespace Checkout.PaymentGateway.InMemoryTests.TestHelper
 {
     public class PaymentServiceClient
     {

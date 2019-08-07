@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
 
-namespace Checkout.PaymentGateway.InMemoryTests
+namespace Checkout.PaymentGateway.InMemoryTests.TestHelper
 {
     public class ApiResponse<T>
     {
