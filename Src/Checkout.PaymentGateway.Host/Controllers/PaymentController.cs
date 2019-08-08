@@ -1,5 +1,8 @@
-﻿using System.Linq;
-using Checkout.PaymentGateway.Host.Contracts;
+﻿using Checkout.PaymentGateway.Host.Contracts;
+using Checkout.PaymentGateway.Host.Mappers;
+using Checkout.PaymentGateway.Host.Models;
+using Checkout.PaymentGateway.Host.PaymentHandler;
+using Checkout.PaymentGateway.Host.Processor;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Checkout.PaymentGateway.Host.Controllers
@@ -8,22 +11,31 @@ namespace Checkout.PaymentGateway.Host.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
+        private PaymentProcessorFactory _paymentProcessorFactory;
+        private IMapper _mapper;
+
         [HttpPost, Route("authorise")]
         public IActionResult Authorise(AuthoriseRequest request)
         {
-            if (!ModelState.IsValid)
+            var processor = _paymentProcessorFactory.Get<AuthoriseRequest>();
+
+            var result = processor.ExecuteAsync(request);
+
+            var response = _mapper.Map<ProcessorResponse, AuthoriseResponse>(result);
+
+            if (response.Status == PaymentStatus.Failed)
             {
-                var response = new BaseResponse()
-                {
-                    Errors = ModelState.Select(x => new Error()
-                    {
-                        Code = x.Key,
-                        Details = x.Value.AttemptedValue
-                    })
-                };
-                return BadRequest(response);
+                return UnprocessableEntity(response);
             }
-            return null;
+            return Ok(response);
+        }
+
+        [HttpGet, Route("{id}")]
+        public IActionResult Get(string id, GetPaymentRequest request)
+        {
+            var x = _paymentProcessorFactory.Get<GetPaymentRequest>();
+
+            return Ok();
         }
     }
 }
