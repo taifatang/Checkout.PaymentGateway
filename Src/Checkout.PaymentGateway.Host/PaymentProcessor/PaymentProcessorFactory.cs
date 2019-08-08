@@ -1,0 +1,20 @@
+﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Checkout.PaymentGateway.Host.PaymentHandler
+{
+    public class PaymentProcessorFactory
+    {
+        private readonly IServiceProvider _serviceProvider;
+
+        public PaymentProcessorFactory(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
+        public IPaymentProcessor<T> Get<T>()
+        {
+            return _serviceProvider.GetRequiredService<IPaymentProcessor<T>>();
+        }
+    }
+}

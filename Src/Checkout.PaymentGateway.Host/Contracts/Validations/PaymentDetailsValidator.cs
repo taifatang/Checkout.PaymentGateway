@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Checkout.PaymentGateway.Host.Contracts.Validations
 {
-    public class PaymentDetailsValidator : AbstractValidator<PaymentDetails>
+    public class PaymentDetailsValidator : AbstractValidator<CardDetails>
     {
         public PaymentDetailsValidator()
         {
@@ -25,8 +25,15 @@ namespace Checkout.PaymentGateway.Host.Contracts.Validations
             {
                 var today = DateTime.Now;
 
-                return expiration.Month >= today.Month
-                       && expiration.Year >= today.Year;
+                if (expiration.Year > today.Year)
+                {
+                    return true;
+                }
+
+                if (expiration.Year == today.Year && expiration.Month > today.Month)
+                {
+                    return true;
+                }
             }
             return false;
         }
