@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Checkout.PaymentGateway.Host.AcquiringBank;
@@ -14,11 +14,11 @@ namespace Checkout.PaymentGateway.InMemoryTests.Stubs
             { "222", new AcquirerResponse(){ Id = Guid.NewGuid().ToString(), Status = "Failed"} }
         };
 
-        public AcquirerResponse Process(PaymentParameters request)
+        public Task<AcquirerResponse> ProcessAsync(AcquirerRequest request)
         {
-            if (_mockedResponse.TryGetValue(request.PaymentDetails.SecurityCode, out var response))
+            if (_mockedResponse.TryGetValue(request.CardDetails.SecurityCode, out var response))
             {
-                return response;
+                return Task.FromResult(response);
             }
 
             throw new NotImplementedException();

@@ -1,10 +1,10 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Checkout.PaymentGateway.Host.Repositories
 {
     public interface IRepository<T>
     {
         T GetAsync(string id);
-        void SaveAsync(T data);
+        Task SaveAsync(T data);
     }
 }

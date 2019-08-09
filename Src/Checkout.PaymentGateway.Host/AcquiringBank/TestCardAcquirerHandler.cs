@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Checkout.PaymentGateway.Host.Contracts.Acquirers;
@@ -20,17 +20,17 @@ namespace Checkout.PaymentGateway.Host.AcquiringBank
             _innerAcquirerHandler = innerAcquirerHandler;
         }
 
-        public AcquirerResponse Process(PaymentParameters request)
+        public Task<AcquirerResponse> ProcessAsync(AcquirerRequest request)
         {
-            if (request.PaymentDetails.CardNumber == TestActivationCardNumber && _mockResponse.ContainsKey(request.PaymentDetails.SecurityCode))
+            if (request.CardDetails.CardNumber == TestActivationCardNumber && _mockResponse.ContainsKey(request.CardDetails.SecurityCode))
             {
-                return new AcquirerResponse()
+                return Task.FromResult(new AcquirerResponse
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Status = _mockResponse[request.PaymentDetails.SecurityCode]
-                };
+                    Status = _mockResponse[request.CardDetails.SecurityCode]
+                });
             }
-            return _innerAcquirerHandler.Process(request);
+            return _innerAcquirerHandler.ProcessAsync(request);
         }
     }
 }
