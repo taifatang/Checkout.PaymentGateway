@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Checkout.PaymentGateway.Host.PaymentHandler
+namespace Checkout.PaymentGateway.Host.PaymentProcessor
 {
     public class PaymentProcessorFactory
     {

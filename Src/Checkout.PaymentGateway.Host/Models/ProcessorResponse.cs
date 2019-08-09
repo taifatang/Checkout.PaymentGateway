@@ -1,6 +1,7 @@
-﻿using Checkout.PaymentGateway.Host.Models;
+using System.Collections.Generic;
+using Checkout.PaymentGateway.Host.Contracts;
 
-namespace Checkout.PaymentGateway.Host.Processor
+namespace Checkout.PaymentGateway.Host.Models
 {
     //Depending on the request processed, in the future this may contain more info
     public class ProcessorResponse

@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Checkout.PaymentGateway.Host.AcquiringBank;
-using Checkout.PaymentGateway.Host.Processor;
+using Checkout.PaymentGateway.Host.Contracts.Acquirers;
 
 namespace Checkout.PaymentGateway.InMemoryTests.Stubs
 {

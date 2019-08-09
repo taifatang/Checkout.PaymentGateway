@@ -1,5 +1,5 @@
 ﻿using Checkout.PaymentGateway.Host.Mappers;
-using Checkout.PaymentGateway.Host.PaymentHandler;
+using Checkout.PaymentGateway.Host.PaymentProcessor;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Checkout.PaymentGateway.Host

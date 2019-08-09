@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Checkout.PaymentGateway.Host.Processor;
+using System.Threading.Tasks;
+using Checkout.PaymentGateway.Host.Contracts.Acquirers;
 
 namespace Checkout.PaymentGateway.Host.AcquiringBank
 {

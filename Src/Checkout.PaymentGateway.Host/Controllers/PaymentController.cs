@@ -1,8 +1,8 @@
-﻿using Checkout.PaymentGateway.Host.Contracts;
+using System.Threading.Tasks;
+using Checkout.PaymentGateway.Host.Contracts;
 using Checkout.PaymentGateway.Host.Mappers;
 using Checkout.PaymentGateway.Host.Models;
-using Checkout.PaymentGateway.Host.PaymentHandler;
-using Checkout.PaymentGateway.Host.Processor;
+using Checkout.PaymentGateway.Host.PaymentProcessor;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Checkout.PaymentGateway.Host.Controllers

@@ -1,5 +1,6 @@
-﻿using Checkout.PaymentGateway.Host.Contracts;
-using Checkout.PaymentGateway.Host.Processor;
+using Checkout.PaymentGateway.Host.Contracts;
+using Checkout.PaymentGateway.Host.Models;
+using CardDetails = Checkout.PaymentGateway.Host.Contracts.CardDetails;
 
 namespace Checkout.PaymentGateway.Host.Mappers
 {

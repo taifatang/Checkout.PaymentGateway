@@ -1,4 +1,6 @@
-﻿namespace Checkout.PaymentGateway.Host.Repositories
+using System.Threading.Tasks;
+
+namespace Checkout.PaymentGateway.Host.Repositories
 {
     public interface IRepository<T>
     {

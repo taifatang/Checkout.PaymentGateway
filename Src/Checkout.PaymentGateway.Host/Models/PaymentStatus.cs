@@ -1,4 +1,4 @@
-﻿namespace Checkout.PaymentGateway.Host.Processor
+namespace Checkout.PaymentGateway.Host.Models
 {
     public enum PaymentStatus
     {

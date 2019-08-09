@@ -1,12 +1,14 @@
-﻿using System;
+using System;
+using System.Threading.Tasks;
 using Checkout.PaymentGateway.Host.AcquiringBank;
 using Checkout.PaymentGateway.Host.Contracts;
+using Checkout.PaymentGateway.Host.Contracts.Acquirers;
 using Checkout.PaymentGateway.Host.Mappers;
 using Checkout.PaymentGateway.Host.Models;
-using Checkout.PaymentGateway.Host.Processor;
 using Checkout.PaymentGateway.Host.Repositories;
+using CardDetails = Checkout.PaymentGateway.Host.Models.CardDetails;
 
-namespace Checkout.PaymentGateway.Host.PaymentHandler
+namespace Checkout.PaymentGateway.Host.PaymentProcessor
 {
     public class PaymentAuthorisationProcessor : IPaymentProcessor<AuthoriseRequest>
     {

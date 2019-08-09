@@ -1,5 +1,3 @@
-using Checkout.PaymentGateway.Host.Processor;
-
 namespace Checkout.PaymentGateway.Host.Contracts
 {
     public class AuthoriseRequest

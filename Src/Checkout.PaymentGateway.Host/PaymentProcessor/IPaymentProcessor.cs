@@ -1,6 +1,7 @@
-﻿using Checkout.PaymentGateway.Host.Processor;
+using System.Threading.Tasks;
+using Checkout.PaymentGateway.Host.Models;
 
-namespace Checkout.PaymentGateway.Host.PaymentHandler
+namespace Checkout.PaymentGateway.Host.PaymentProcessor
 {
     public interface IPaymentProcessor<T>
     {

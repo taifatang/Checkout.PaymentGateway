@@ -1,5 +1,3 @@
-﻿using Checkout.PaymentGateway.Host.Contracts;
-
 namespace Checkout.PaymentGateway.Host.Models
 {
     public class Payment

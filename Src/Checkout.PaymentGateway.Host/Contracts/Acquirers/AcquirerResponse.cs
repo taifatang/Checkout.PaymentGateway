@@ -1,4 +1,4 @@
-﻿namespace Checkout.PaymentGateway.Host.Contracts
+namespace Checkout.PaymentGateway.Host.Contracts.Acquirers
 {
     public class AcquirerResponse
     {
