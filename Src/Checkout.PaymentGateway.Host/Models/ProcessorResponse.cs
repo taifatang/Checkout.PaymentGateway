@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Checkout.PaymentGateway.Host.Contracts;
 
 namespace Checkout.PaymentGateway.Host.Models
@@ -7,5 +7,6 @@ namespace Checkout.PaymentGateway.Host.Models
     public class ProcessorResponse
     {
         public Payment Payment { get; set; }
+        public IEnumerable<Error> Errors { get; set; }
     }
 }
