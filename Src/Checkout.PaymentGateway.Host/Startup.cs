@@ -35,6 +35,7 @@ namespace Checkout.PaymentGateway.Host
                 .AddJsonOptions(options =>
                 {
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 });
 
             services.Configure<ApiBehaviorOptions>(options =>

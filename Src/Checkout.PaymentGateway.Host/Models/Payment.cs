@@ -1,6 +1,6 @@
 namespace Checkout.PaymentGateway.Host.Models
 {
-    public class Payment
+    public class Payment: IIdentifiable
     {
         public string Id { get; set; }
         public string AcquirerReference { get; set; }

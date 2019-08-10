@@ -8,7 +8,7 @@ namespace Checkout.PaymentGateway.Host.Mappers
         public CardDetails Mask(CardDetails cardDetails)
         {
             cardDetails.CardNumber = GetFirstSixAndLastFour(cardDetails.CardNumber);
-            cardDetails.SecurityCode = "***";
+            cardDetails.SecurityCode = null;
 
             return cardDetails;
         }

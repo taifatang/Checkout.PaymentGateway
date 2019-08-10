@@ -31,13 +31,13 @@ namespace Checkout.PaymentGateway.Host.UnitTests.Mappers
         [TestCase("1234")]
         [TestCase("")]
         [TestCase(null)]
-        public void Mask_card_security_code(string securityCode)
+        public void Nullify_card_security_code(string securityCode)
         {
             var cardDetails = new CardDetails { SecurityCode = securityCode };
 
             var result = new CardDetailsMasker().Mask(cardDetails);
 
-            Assert.That(result.CardNumber, Is.EqualTo("***"));
+            Assert.IsNull(result.CardNumber);
         }
     }
 }

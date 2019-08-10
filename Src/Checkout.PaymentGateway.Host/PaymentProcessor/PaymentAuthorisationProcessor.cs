@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Checkout.PaymentGateway.Host.AcquiringBanks;
 using Checkout.PaymentGateway.Host.Contracts;
@@ -27,7 +27,6 @@ namespace Checkout.PaymentGateway.Host.PaymentProcessor
 
         public async Task<ProcessorResponse> ExecuteAsync(AuthoriseRequest request)
         {
-            //paymentParameters.MerchantAccount
 
             var acquirerRequest = _Mapper.Map<AuthoriseRequest, AcquirerRequest>(request);
 
@@ -35,7 +34,7 @@ namespace Checkout.PaymentGateway.Host.PaymentProcessor
 
             var payment = new Payment
             {
-                Id = Guid.Empty.ToString(),
+                Id = Guid.NewGuid().ToString(),
                 AcquirerReference = acquirerResponse.Id,
                 AcquirerStatus = acquirerResponse.Status,
                 Amount = request.Amount,
@@ -43,11 +42,11 @@ namespace Checkout.PaymentGateway.Host.PaymentProcessor
                 CardDetails = _cardDetailsMasker.Mask(new CardDetails
                 {
                     CardNumber = request.CardDetails.CardNumber,
-                    SecurityCode = request.CardDetails.SecurityCode,
                     ExpiryDate = request.CardDetails.ExpiryDate
                 })
             };
 
+            //paymentParameters.MerchantAccount, maybe used to isolate other merchant especially database table?
             await _repository.SaveAsync(payment);
 
             return _Mapper.Map<Payment, ProcessorResponse>(payment);

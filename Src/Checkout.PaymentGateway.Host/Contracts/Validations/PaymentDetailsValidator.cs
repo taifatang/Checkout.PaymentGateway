@@ -18,10 +18,7 @@ namespace Checkout.PaymentGateway.Host.Contracts.Validations
         }
         public bool GreaterThanToday(string expiryDate)
         {
-            if (DateTime.TryParseExact(
-                expiryDate, "MMyy",
-                CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal,
-                out var expiration))
+            if (DateTime.TryParseExact(expiryDate, "MMyy", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out var expiration))
             {
                 var today = DateTime.Now;
 
@@ -30,7 +27,7 @@ namespace Checkout.PaymentGateway.Host.Contracts.Validations
                     return true;
                 }
 
-                if (expiration.Year == today.Year && expiration.Month > today.Month)
+                if (expiration.Year == today.Year && expiration.Month >= today.Month)
                 {
                     return true;
                 }

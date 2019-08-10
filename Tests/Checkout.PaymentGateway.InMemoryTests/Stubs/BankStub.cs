@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Checkout.PaymentGateway.Host.AcquiringBanks;
@@ -10,7 +10,7 @@ namespace Checkout.PaymentGateway.InMemoryTests.Stubs
     {
         private readonly Dictionary<string, AcquirerResponse> _mockedResponse = new Dictionary<string, AcquirerResponse>()
         {
-            { "111", new AcquirerResponse(){ Id = Guid.NewGuid().ToString(), Status = "Success"} },
+            { "111", new AcquirerResponse(){ Id = Guid.NewGuid().ToString(), Status = "Accepted"} },
             { "222", new AcquirerResponse(){ Id = Guid.NewGuid().ToString(), Status = "Failed"} }
         };
 
