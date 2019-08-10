@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using Checkout.PaymentGateway.Host;
-using Checkout.PaymentGateway.Host.AcquiringBank;
+using Checkout.PaymentGateway.Host.AcquiringBanks;
 using Checkout.PaymentGateway.InMemoryTests.Stubs;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;

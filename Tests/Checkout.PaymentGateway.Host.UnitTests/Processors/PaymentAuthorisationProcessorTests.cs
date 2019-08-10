@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoFixture;
-using Checkout.PaymentGateway.Host.AcquiringBank;
+using Checkout.PaymentGateway.Host.AcquiringBanks;
 using Checkout.PaymentGateway.Host.Contracts;
 using Checkout.PaymentGateway.Host.Contracts.Acquirers;
 using Checkout.PaymentGateway.Host.Mappers;
