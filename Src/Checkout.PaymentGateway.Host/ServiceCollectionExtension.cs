@@ -15,6 +15,7 @@ namespace Checkout.PaymentGateway.Host
         private static void RegisterMappers(IServiceCollection services)
         {
             services.AddSingleton<IMapper, Mapper>();
+            services.AddSingleton<ICardDetailsMasker, CardDetailsMasker>();
             services.Scan(scan => scan.FromAssemblyOf<Startup>()
                 .AddClasses(classes => classes.AssignableTo(typeof(IMap<,>)))
                 .AsImplementedInterfaces()
