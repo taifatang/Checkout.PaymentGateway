@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Checkout.PaymentGateway.Host.AcquiringBank;
 using Checkout.PaymentGateway.Host.Contracts;
@@ -14,14 +14,24 @@ namespace Checkout.PaymentGateway.Host.PaymentProcessor
     {
         private readonly IRepository<Payment> _repository;
         private readonly IAcquirerHandler _acquirerHandler;
+        private readonly ICardDetailsMasker _cardDetailsMasker;
         private IMapper _Mapper;
 
-        public ProcessorResponse ExecuteAsync(AuthoriseRequest request)
+        public PaymentAuthorisationProcessor(IRepository<Payment> repository, IAcquirerHandler acquirerHandler, ICardDetailsMasker cardDetailsMasker, IMapper mapper)
+        {
+            _repository = repository;
+            _acquirerHandler = acquirerHandler;
+            _cardDetailsMasker = cardDetailsMasker;
+            _Mapper = mapper;
+        }
+
+        public async Task<ProcessorResponse> ExecuteAsync(AuthoriseRequest request)
         {
             //paymentParameters.MerchantAccount
+
             var acquirerRequest = _Mapper.Map<AuthoriseRequest, AcquirerRequest>(request);
 
-            var acquirerResponse = _acquirerHandler.Process(acquirerRequest);
+            var acquirerResponse = await _acquirerHandler.ProcessAsync(acquirerRequest);
 
             var payment = new Payment
             {
@@ -30,46 +40,17 @@ namespace Checkout.PaymentGateway.Host.PaymentProcessor
                 AcquirerStatus = acquirerResponse.Status,
                 Amount = request.Amount,
                 Currency = request.CurrencyCode,
-                CardDetails = new CardDetails
+                CardDetails = _cardDetailsMasker.Mask(new CardDetails
                 {
                     CardNumber = request.CardDetails.CardNumber,
+                    SecurityCode = request.CardDetails.SecurityCode,
                     ExpiryDate = request.CardDetails.ExpiryDate
-                }
+                })
             };
 
-            _repository.SaveAsync(payment);
+            await _repository.SaveAsync(payment);
 
-            return new ProcessorResponse()
-            {
-                Payment = payment
-            };
-        }
-    }
-
-    public class ProcessorResponseMapper : IMap<Payment, ProcessorResponse>
-    {
-        private readonly CardNumberObscurer _cardNumberObscurer;
-
-        public ProcessorResponseMapper(CardNumberObscurer cardNumberObscurer)
-        {
-            _cardNumberObscurer = cardNumberObscurer;
-        }
-        public ProcessorResponse Map(Payment payment)
-        {
-            return new ProcessorResponse()
-            {
-                Id = payment.Id,
-                Status = payment.AcquirerStatus == "Accepted" ? PaymentStatus.Accepted : PaymentStatus.Failed,
-                Payment = MaskedFields(payment)
-            };
-        }
-
-        public Payment MaskedFields(Payment payment)
-        {
-            payment.CardDetails.CardNumber = "***";
-            payment.CardDetails.SecurityCode = "***";
-
-            return payment;
+            return _Mapper.Map<Payment, ProcessorResponse>(payment);
         }
     }
 }

@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Checkout.PaymentGateway.Host.Contracts;
 using Checkout.PaymentGateway.Host.Mappers;
 using Checkout.PaymentGateway.Host.Models;
@@ -11,15 +11,21 @@ namespace Checkout.PaymentGateway.Host.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
-        private PaymentProcessorFactory _paymentProcessorFactory;
-        private IMapper _mapper;
+        private readonly IPaymentProcessorFactory _paymentProcessorFactory;
+        private readonly IMapper _mapper;
+
+        public PaymentController(IPaymentProcessorFactory paymentProcessorFactory, IMapper mapper)
+        {
+            _paymentProcessorFactory = paymentProcessorFactory;
+            _mapper = mapper;
+        }
 
         [HttpPost, Route("authorise")]
-        public IActionResult Authorise(AuthoriseRequest request)
+        public async Task<IActionResult> Authorise(AuthoriseRequest request)
         {
             var processor = _paymentProcessorFactory.Get<AuthoriseRequest>();
 
-            var result = processor.ExecuteAsync(request);
+            var result = await processor.ExecuteAsync(request);
 
             var response = _mapper.Map<ProcessorResponse, AuthoriseResponse>(result);
 
@@ -30,12 +36,12 @@ namespace Checkout.PaymentGateway.Host.Controllers
             return Ok(response);
         }
 
-        [HttpGet, Route("{id}")]
-        public IActionResult Get(string id, GetPaymentRequest request)
-        {
-            var x = _paymentProcessorFactory.Get<GetPaymentRequest>();
+        //[HttpGet, Route("{id}")]
+        //public IActionResult Get(string id, GetPaymentRequest request)
+        //{
+        //    var x = _paymentProcessorFactory.Get<GetPaymentRequest>();
 
-            return Ok();
-        }
+        //    return Ok();
+        //}
     }
 }
