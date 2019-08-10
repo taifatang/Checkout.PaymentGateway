@@ -1,5 +1,6 @@
 ﻿using Checkout.PaymentGateway.Host.Attirubtes;
 using Checkout.PaymentGateway.Host.Contracts.Validations;
+using Checkout.PaymentGateway.Host.Middlewares;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -61,6 +62,9 @@ namespace Checkout.PaymentGateway.Host
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            app.UseMiddleware<LogRequestMiddleware>();
+            app.UseMiddleware<LogResponseMiddleware>();
         }
     }
 }
