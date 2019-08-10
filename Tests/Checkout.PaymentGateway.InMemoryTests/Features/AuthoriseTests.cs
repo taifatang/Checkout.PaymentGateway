@@ -21,7 +21,7 @@ namespace Checkout.PaymentGateway.InMemoryTests.Features
                     ExpiryDate = "0129",
                     SecurityCode = "111"
                 },
-                MerchantAccount = "merchant_account",
+                MerchantAccount = "CheckoutCom",
                 Amount = 25.00m,
                 CurrencyCode = "GBP"
             };
@@ -47,7 +47,7 @@ namespace Checkout.PaymentGateway.InMemoryTests.Features
                     ExpiryDate = "0129",
                     SecurityCode = "222"
                 },
-                MerchantAccount = "merchant_account",
+                MerchantAccount = "CheckoutCom",
                 Amount = 25.00m,
                 CurrencyCode = "GBP"
             };

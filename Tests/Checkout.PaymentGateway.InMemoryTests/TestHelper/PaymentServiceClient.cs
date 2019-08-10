@@ -27,5 +27,19 @@ namespace Checkout.PaymentGateway.InMemoryTests.TestHelper
                 Header = response.Headers
             };
         }
+
+        public async Task<ApiResponse<AuthoriseResponse>> GetPayment(string id, string merchantAccount)
+        {
+            var response = await _httpClient.GetAsync($"payment/{id}/{merchantAccount}");
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            return new ApiResponse<AuthoriseResponse>
+            {
+                Content = JsonConvert.DeserializeObject<AuthoriseResponse>(content),
+                HttpStatusCode = response.StatusCode,
+                Header = response.Headers
+            };
+        }
     }
 }

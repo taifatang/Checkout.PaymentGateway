@@ -87,6 +87,7 @@ namespace Checkout.PaymentGateway.Host.UnitTests.Processors
             Assert.IsNotNull(payment.Id);
 
             Assert.That(payment.AcquirerReference, Is.EqualTo(_acquirerResponse.Id));
+            Assert.That(payment.MerchantAccount, Is.EqualTo(_authoriseRequest.MerchantAccount));
             Assert.That(payment.AcquirerStatus, Is.EqualTo(_acquirerResponse.Status));
             Assert.That(payment.Amount, Is.EqualTo(_authoriseRequest.Amount));
             Assert.That(payment.Currency, Is.EqualTo(_authoriseRequest.CurrencyCode));
