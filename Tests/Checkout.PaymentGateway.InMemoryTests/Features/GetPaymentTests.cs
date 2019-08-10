@@ -11,7 +11,7 @@ namespace Checkout.PaymentGateway.InMemoryTests.Features
     public class GetPaymentTests : TestBase
     {
         [Test]
-        public async Task Retrieve_existing_payment()
+        public async Task Retrieve_an_existing_payment()
         {
             var request = new AuthoriseRequest()
             {

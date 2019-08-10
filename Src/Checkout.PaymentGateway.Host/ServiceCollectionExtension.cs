@@ -42,7 +42,7 @@ namespace Checkout.PaymentGateway.Host
             services.AddSingleton(typeof(IRepository<>), typeof(InMemoryRepository<>));
 
             //services.AddSingleton(typeof(IRepository<>), typeof(InMemoryRepository<>));
-            //services.Decorate(typeof(IRepository<>), typeof(InMemoryRepository<>));
+            //services.Decorate(typeof(IRepository<>), typeof(IEncyptionRepository<>));
         }
 
         public static void RegisterAcquirers(IServiceCollection services)

@@ -17,7 +17,7 @@ namespace Checkout.PaymentGateway.Host.UnitTests.Processors
     public class PaymentAuthorisationProcessorTests
     {
         private PaymentAuthorisationProcessor _authorisationProcessor;
-        private Mock<IRepository<Payment>> _repository;
+        private Mock<IRepository<Payment>> _repositoryMock;
         private Mock<IAcquirerHandler> _acquirerHandlerMock;
         private Mock<ICardDetailsMasker> _cardDetailsMaskerMock;
         private Mock<IMapper> _mapperMock;
@@ -36,12 +36,12 @@ namespace Checkout.PaymentGateway.Host.UnitTests.Processors
             _authoriseRequest = _fixture.Create<AuthoriseRequest>();
             _authoriseRequest.CardDetails.CardNumber = "4242 4242 4242 4242";
 
-            _repository = new Mock<IRepository<Payment>>();
+            _repositoryMock = new Mock<IRepository<Payment>>();
             _acquirerHandlerMock = new Mock<IAcquirerHandler>();
             _cardDetailsMaskerMock = new Mock<ICardDetailsMasker>();
             _mapperMock = new Mock<IMapper>();
 
-            _authorisationProcessor = new PaymentAuthorisationProcessor(_repository.Object, _acquirerHandlerMock.Object, _cardDetailsMaskerMock.Object, _mapperMock.Object);
+            _authorisationProcessor = new PaymentAuthorisationProcessor(_repositoryMock.Object, _acquirerHandlerMock.Object, _cardDetailsMaskerMock.Object, _mapperMock.Object);
 
             _mapperMock.Setup(x => x.Map<AuthoriseRequest, AcquirerRequest>(It.IsAny<AuthoriseRequest>())).Returns(_acquirerRequest);
             _acquirerHandlerMock.Setup(x => x.ProcessAsync(_acquirerRequest)).ReturnsAsync(_acquirerResponse);
@@ -71,14 +71,14 @@ namespace Checkout.PaymentGateway.Host.UnitTests.Processors
 
             await _authorisationProcessor.ExecuteAsync(_authoriseRequest);
 
-            _repository.Verify(x => x.SaveAsync(It.Is<Payment>(p => IsExpectedPayment(p, cardDetails))), Times.Once);
+            _repositoryMock.Verify(x => x.SaveAsync(It.Is<Payment>(p => IsExpectedPayment(p, cardDetails))), Times.Once);
         }
 
         [TearDown]
         public void TearDown()
         {
             _acquirerHandlerMock.VerifyAll();
-            _repository.VerifyAll();
+            _repositoryMock.VerifyAll();
             _mapperMock.VerifyAll();
         }
 

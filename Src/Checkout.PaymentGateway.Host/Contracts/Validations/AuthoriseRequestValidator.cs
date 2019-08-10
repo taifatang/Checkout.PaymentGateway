@@ -2,6 +2,7 @@
 
 namespace Checkout.PaymentGateway.Host.Contracts.Validations
 {
+    //a more complex validation mechanism may be ideal especially for card number, luhn, bin detection: card length
     public class AuthoriseRequestValidator: AbstractValidator<AuthoriseRequest>
     {
         public AuthoriseRequestValidator()
@@ -16,6 +17,8 @@ namespace Checkout.PaymentGateway.Host.Contracts.Validations
 
         public bool SupportedCurrencyCode(string currencyCode)
         {
+            //assuming there are restriction on the currency? 
+            //or somehow business rules to make money from exchange rate margin?
             return currencyCode == "GBP";
         }
     }

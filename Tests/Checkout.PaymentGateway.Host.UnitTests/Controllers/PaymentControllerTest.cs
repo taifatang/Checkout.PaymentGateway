@@ -84,7 +84,7 @@ namespace Checkout.PaymentGateway.Host.UnitTests.Controllers
         }
 
         [Test]
-        public async Task Returns_200_status_code_when_is_retrieved()
+        public async Task Returns_200_status_code_when_payment_is_retrieved()
         {
             var payment = _fixture.Create<Payment>();
             _repositoryMock.Setup(x => x.GetAsync(It.IsAny<GetPaymentRequest>())).ReturnsAsync(payment);
