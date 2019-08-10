@@ -10,6 +10,9 @@ using CardDetails = Checkout.PaymentGateway.Host.Models.CardDetails;
 
 namespace Checkout.PaymentGateway.Host.PaymentProcessor
 {
+    //This pattern is taking into future requirement into consideration and assuming its a core project rather than POC app
+    //PaymentRefundProcessor, EnrolmentProcessor, PartialRefundProcessor
+    //For a POC a single AuthorisationService along with the IRepository<T> at the controller level would suffice 
     public class PaymentAuthorisationProcessor : IPaymentProcessor<AuthoriseRequest>
     {
         private readonly IRepository<Payment> _repository;

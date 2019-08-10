@@ -32,6 +32,7 @@ namespace Checkout.PaymentGateway.InMemoryTests.TestHelper
 
         private void ConfigureOverrides(IServiceCollection services)
         {
+            //comment this out and it would hit the FakeBarclaysBankAcquirerHandler instead
             services.AddTransient<IAcquirerHandler, BankStub>();
         }
 

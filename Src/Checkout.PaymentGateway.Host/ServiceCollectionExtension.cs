@@ -20,6 +20,7 @@ namespace Checkout.PaymentGateway.Host
         {
             services.AddSingleton<IMapper, Mapper>();
             services.AddSingleton<ICardDetailsMasker, CardDetailsMasker>();
+
             services.Scan(scan => scan.FromAssembliesOf(typeof(IMap<,>))
                 .AddClasses(classes => classes.AssignableTo(typeof(IMap<,>)))
                 .AsImplementedInterfaces()
@@ -29,6 +30,7 @@ namespace Checkout.PaymentGateway.Host
         public static void RegisterPaymentProcessors(IServiceCollection services)
         {
             services.AddSingleton<IPaymentProcessorFactory, PaymentProcessorFactory>();
+
             services.Scan(scan => scan.FromAssembliesOf(typeof(IPaymentProcessor<>))
                 .AddClasses(classes => classes.AssignableTo(typeof(IPaymentProcessor<>)))
                 .AsImplementedInterfaces()
@@ -41,12 +43,12 @@ namespace Checkout.PaymentGateway.Host
 
             //services.AddSingleton(typeof(IRepository<>), typeof(InMemoryRepository<>));
             //services.Decorate(typeof(IRepository<>), typeof(InMemoryRepository<>));
-            //services.Decorate(typeof(IRepository<>), (inner, provider) => new OtherDecorator(inner, provider.GetRequiredService<IService>()));
         }
 
         public static void RegisterAcquirers(IServiceCollection services)
         {
             services.AddTransient<IAcquirerHandler, FakeBarclaysBankAcquirerHandler>();
+            services.Decorate<IAcquirerHandler, MonitorAcquirerHandler>();
         }
     }
 }
