@@ -35,6 +35,7 @@ namespace Checkout.PaymentGateway.Host.PaymentProcessor
             var payment = new Payment
             {
                 Id = Guid.NewGuid().ToString(),
+                MerchantAccount = request.MerchantAccount,
                 AcquirerReference = acquirerResponse.Id,
                 AcquirerStatus = acquirerResponse.Status,
                 Amount = request.Amount,
@@ -46,7 +47,8 @@ namespace Checkout.PaymentGateway.Host.PaymentProcessor
                 })
             };
 
-            //paymentParameters.MerchantAccount, maybe used to isolate other merchant especially database table?
+            //paymentParameters.MerchantAccount, could use merchant id to isolate data
+            //event sourcing to keep record of all interactions and its sequence
             await _repository.SaveAsync(payment);
 
             return _Mapper.Map<Payment, ProcessorResponse>(payment);

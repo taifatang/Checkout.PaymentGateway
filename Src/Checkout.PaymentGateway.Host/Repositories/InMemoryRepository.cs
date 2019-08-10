@@ -8,24 +8,32 @@ namespace Checkout.PaymentGateway.Host.Repositories
     //just for show case, not for production
     public class InMemoryRepository<T> : IRepository<T> where T : IIdentifiable
     {
-        private ConcurrentDictionary<string, T> _dictionary = new ConcurrentDictionary<string, T>();
+        private readonly ConcurrentDictionary<string, T> _checkoutMerchantDatabase = new ConcurrentDictionary<string, T>();
 
-        public T GetAsync(string id)
+        public Task<T> GetAsync(IIdentifiable identifier)
         {
-            if (_dictionary.TryGetValue(id, out var value))
+            if (identifier.MerchantAccount != "CheckoutCom")
             {
-                return value;
+                throw new NotSupportedException();
             }
-            throw new InvalidOperationException();
+
+            if (_checkoutMerchantDatabase.TryGetValue(identifier.Id, out var value))
+            {
+                return Task.FromResult(value);
+            }
+            return Task.FromResult(default(T));
         }
 
         public Task SaveAsync(T data)
         {
-            if (_dictionary.TryAdd(data.Id, data))
+            if (data.MerchantAccount != "CheckoutCom")
             {
-                return Task.FromResult(0);
+                throw new NotSupportedException();
             }
-            throw new InvalidOperationException();
+
+            _checkoutMerchantDatabase.TryAdd(data.Id, data);
+
+            return Task.FromResult(0);
         }
     }
 }

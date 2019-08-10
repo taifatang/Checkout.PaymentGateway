@@ -3,6 +3,7 @@ using Checkout.PaymentGateway.Host.Contracts;
 using Checkout.PaymentGateway.Host.Mappers;
 using Checkout.PaymentGateway.Host.Models;
 using Checkout.PaymentGateway.Host.PaymentProcessor;
+using Checkout.PaymentGateway.Host.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Checkout.PaymentGateway.Host.Controllers
@@ -13,11 +14,13 @@ namespace Checkout.PaymentGateway.Host.Controllers
     {
         private readonly IPaymentProcessorFactory _paymentProcessorFactory;
         private readonly IMapper _mapper;
+        private readonly IRepository<Payment> _repository;
 
-        public PaymentController(IPaymentProcessorFactory paymentProcessorFactory, IMapper mapper)
+        public PaymentController(IPaymentProcessorFactory paymentProcessorFactory, IMapper mapper, IRepository<Payment> repository)
         {
             _paymentProcessorFactory = paymentProcessorFactory;
             _mapper = mapper;
+            _repository = repository;
         }
 
         [HttpPost, Route("authorise")]
@@ -36,12 +39,21 @@ namespace Checkout.PaymentGateway.Host.Controllers
             return Ok(response);
         }
 
-        //[HttpGet, Route("{id}")]
-        //public IActionResult Get(string id, GetPaymentRequest request)
-        //{
-        //    var x = _paymentProcessorFactory.Get<GetPaymentRequest>();
+        [HttpGet, Route("{id}/{merchantAccount}")]
+        public async Task<IActionResult> Get(string id, string merchantAccount)
+        {
+            //simple operation, _paymentProcessorFactory is designed for other acquirer operation refund, enrol etc
+            var payment = await _repository.GetAsync(new GetPaymentRequest
+            {
+                Id = id,
+                MerchantAccount = merchantAccount
+            });
 
-        //    return Ok();
-        //}
+            if (payment == null)
+            {
+                return NotFound();
+            }
+            return Ok(payment);
+        }
     }
 }
